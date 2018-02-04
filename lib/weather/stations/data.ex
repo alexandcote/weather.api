@@ -1,11 +1,8 @@
 defmodule Weather.Stations.Data do
   use Ecto.Schema
-
   import Ecto.Changeset
 
-  @moduledoc """
-  The plain and simple `Data` model
-  """
+  alias Weather.Stations.Station
 
   schema "datas" do
     field(:barometer, :float)
@@ -18,10 +15,13 @@ defmodule Weather.Stations.Data do
     field(:wind_direction, :float)
     field(:wind_speed, :integer)
 
+    belongs_to :station, Station
+
     timestamps()
   end
 
   @required_fields ~w(
+    station_id
     barometer
     in_temperature
     out_temperature
@@ -33,9 +33,7 @@ defmodule Weather.Stations.Data do
     wind_speed
   )a
 
-  @doc """
-  Builds a changeset based on the `struct` and `params`.
-  """
+  @doc false
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, @required_fields)

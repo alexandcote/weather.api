@@ -6,8 +6,11 @@ defmodule WeatherWeb.DataController do
 
   action_fallback WeatherWeb.FallbackController
 
-  def create(conn, %{"data" => data_params}) do
-    with {:ok, %Data{} = data} <- Stations.create_data(data_params) do
+  def create(conn, %{"data" => data_params, "station_id" => station_id}) do
+    params = data_params
+    |> Map.put("station_id", station_id)
+
+    with {:ok, %Data{} = data} <- Stations.create_data(params) do
       conn
       |> put_status(:created)
       |> render("show.json", data: data)

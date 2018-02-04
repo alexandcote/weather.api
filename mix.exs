@@ -48,7 +48,12 @@ defmodule Weather.Mixfile do
 
       # GraphQL
       {:absinthe, "~> 1.4.0"},
-      {:absinthe_plug, "~> 1.4.0"}
+      {:absinthe_plug, "~> 1.4.0"},
+
+      # Authentification
+      {:guardian, "~> 1.0"},
+      {:comeonin, "~> 4.0"},
+      {:pbkdf2_elixir, "~> 0.12"}
     ]
   end
 

@@ -1,5 +1,7 @@
 use Mix.Config
 
+alias Weather.Authentication
+
 # General application configuration
 config :weather,
   ecto_repos: [Weather.Repo]
@@ -26,6 +28,14 @@ config :weather, Weather.Repo,
   username: System.get_env("POSTGRES_USER"),
   password: System.get_env("POSTGRES_PASSWORD"),
   pool_size: String.to_integer(System.get_env("POSTGRES_POOL_SIZE") || "10")
+
+config :weather, Authentication.Guardian,
+  issuer: "weather",
+  secret_key: System.get_env("GUARDIAN_SECRET_KEY")
+
+config :weather, Authentication.Pipeline,
+       module: Authentication.Guardian,
+       error_handler: Authentication.ErrorHandler
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
