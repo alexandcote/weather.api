@@ -15,7 +15,7 @@ defmodule Weather.Stations.Data do
     field(:wind_direction, :float)
     field(:wind_speed, :integer)
 
-    belongs_to :station, Station
+    belongs_to(:station, Station)
 
     timestamps()
   end

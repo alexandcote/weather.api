@@ -6,14 +6,16 @@ defmodule WeatherGraph.Plugs.Context do
   def init(opts), do: opts
 
   def call(conn, _) do
-    context = build_context(conn)
-    put_private(conn, :absinthe, %{context: context})
+    case build_context(conn) do
+      {:ok, context} -> put_private(conn, :absinthe, %{context: context})
+      _ -> conn
+    end
   end
 
   def build_context(conn) do
     case Guardian.Plug.current_resource(conn) do
-      nil -> conn
-      user -> %{current_user: user}
+      nil -> {:error}
+      user -> {:ok, %{current_user: user}}
     end
   end
 end

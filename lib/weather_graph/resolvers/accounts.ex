@@ -8,8 +8,10 @@ defmodule WeatherGraph.Resolvers.Accounts do
 
   def login(_parent, %{email: email, password: password}, _context) do
     with {:ok, user} <- Accounts.authenticate_user(email, password),
-         {:ok, jwt, _ } <- Guardian.encode_and_sign(user) do
+         {:ok, jwt, _} <- Guardian.encode_and_sign(user) do
       {:ok, %{token: jwt}}
+    else
+      {:error, _} -> {:error, "Incorrect login credentials"}
     end
   end
 

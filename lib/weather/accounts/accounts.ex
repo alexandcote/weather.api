@@ -32,10 +32,8 @@ defmodule Weather.Accounts do
   Authenticate a user.
   """
   def authenticate_user(email, password) do
-    user = find_user_by_email(String.downcase(email))
-    with {:error, _} <- Comeonin.Pbkdf2.check_pass(user, password) do
-      {:error, "Incorrect login credentials"}
-    end
+    find_user_by_email(String.downcase(email))
+    |> Comeonin.Pbkdf2.check_pass(password)
   end
 
   @doc """

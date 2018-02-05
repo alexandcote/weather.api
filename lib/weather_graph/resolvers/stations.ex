@@ -19,7 +19,7 @@ defmodule WeatherGraph.Resolvers.Stations do
   def create_station(_parent, %{station: station}, %{context: %{current_user: user}}) do
     station
     |> Map.put(:owner_id, user.id)
-    |> Stations.create_station
+    |> Stations.create_station()
   end
 
   def list_datas(_args, _info) do
@@ -33,6 +33,8 @@ defmodule WeatherGraph.Resolvers.Stations do
     end
   end
 
+  # TODO replace this with a dataloader
+  # https://github.com/absinthe-graphql/absinthe/blob/master/guides/ecto.md
   def current_data(station, _args, _info) do
     case Stations.current_data_of_station(station) do
       data -> {:ok, data}

@@ -8,8 +8,8 @@ defmodule Weather.Stations.Station do
   schema "stations" do
     field(:name, :string)
 
-    belongs_to :owner, User, foreign_key: :owner_id
-    has_many :datas, Data
+    belongs_to(:owner, User, foreign_key: :owner_id)
+    has_many(:datas, Data)
 
     timestamps()
   end

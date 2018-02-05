@@ -14,7 +14,7 @@ defmodule WeatherGraph.Schema do
   query do
     @desc "Get my information"
     field :me, type: :user do
-      middleware Middlewares.Authentication
+      middleware(Middlewares.Authentication)
       resolve(&Resolvers.Accounts.me/2)
     end
 
@@ -38,30 +38,30 @@ defmodule WeatherGraph.Schema do
 
   mutation do
     field :create_user, type: :user do
-      arg :user, :user_params
+      arg(:user, :user_params)
 
-      resolve &Resolvers.Accounts.create_user/3
+      resolve(&Resolvers.Accounts.create_user/3)
     end
 
     field :login, type: :session do
-      arg :email, non_null(:string)
-      arg :password, non_null(:string)
+      arg(:email, non_null(:string))
+      arg(:password, non_null(:string))
 
-      resolve &Resolvers.Accounts.login/3
+      resolve(&Resolvers.Accounts.login/3)
     end
 
     field :update_profile, type: :user do
-      arg :user, :user_params
+      arg(:user, :user_params)
 
-      middleware Middlewares.Authentication
-      resolve &Resolvers.Accounts.update_profile/3
+      middleware(Middlewares.Authentication)
+      resolve(&Resolvers.Accounts.update_profile/3)
     end
 
     field :create_station, type: :station do
-      arg :station, :station_params
+      arg(:station, :station_params)
 
-      middleware Middlewares.Authentication
-      resolve &Resolvers.Stations.create_station/3
+      middleware(Middlewares.Authentication)
+      resolve(&Resolvers.Stations.create_station/3)
     end
   end
 end

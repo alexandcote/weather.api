@@ -24,7 +24,7 @@ defmodule Weather.Stations do
     Station
     |> where(owner_id: ^user.id)
     |> order_by(:name)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -63,7 +63,7 @@ defmodule Weather.Stations do
   def list_datas do
     Data
     |> order_by(:inserted_at)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -76,11 +76,11 @@ defmodule Weather.Stations do
   """
   def current_data_of_station(station) do
     Data
-    |> last
     |> where(station_id: ^station.id)
-    |> Repo.one
+    |> order_by(desc: :inserted_at)
+    |> first
+    |> Repo.one()
   end
-
 
   @doc """
   Creates a data.
