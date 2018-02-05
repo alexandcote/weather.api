@@ -15,10 +15,12 @@ defmodule Weather.Accounts.User do
     timestamps()
   end
 
+  @required_fields ~w(name email)a
+
   @doc false
   def update_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :email], [:password])
+    |> cast(params, @required_fields, [:password])
     |> validate_required([:name, :email])
     |> put_pass_hash()
   end
@@ -26,14 +28,14 @@ defmodule Weather.Accounts.User do
   @doc false
   def registration_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :email, :password])
-    |> validate_required([:name, :email, :password])
+    |> cast(params, [:password | @required_fields])
+    |> validate_required([:password | @required_fields])
     |> put_pass_hash()
   end
 
   @doc false
-  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: pass}} = changeset) do
-    change(changeset, Comeonin.Pbkdf2.add_hash(pass))
+  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+    change(changeset, Comeonin.Pbkdf2.add_hash(password))
   end
 
   defp put_pass_hash(changeset), do: changeset

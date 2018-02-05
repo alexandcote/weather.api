@@ -62,7 +62,17 @@ defmodule Weather.Stations do
   """
   def list_datas do
     Data
-    |> order_by(:inserted_at)
+    |> order_by(desc: :inserted_at)
+    |> Repo.all()
+  end
+
+  @doc """
+  Returns the list of datas for a station.
+  """
+  def list_datas_of_station(station) do
+    Data
+    |> where(station_id: ^station.id)
+    |> order_by(desc: :inserted_at)
     |> Repo.all()
   end
 

@@ -40,4 +40,8 @@ defmodule WeatherGraph.Resolvers.Stations do
       data -> {:ok, data}
     end
   end
+
+  def list_datas(station, _args, _info) do
+    {:ok, Stations.list_datas_of_station(station)}
+  end
 end
