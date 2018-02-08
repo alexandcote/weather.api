@@ -6,7 +6,7 @@ defmodule Weather.Stations do
   import Ecto.Query, warn: false
 
   alias Weather.Repo
-  alias Weather.Stations.{Station, Data}
+  alias Weather.Stations.Station
   alias Weather.Connection
 
   @doc """
@@ -59,34 +59,35 @@ defmodule Weather.Stations do
   end
 
   @doc """
-  Returns the list of datas.
-  """
-  def list_datas do
-    Data
-    |> order_by(desc: :inserted_at)
-    |> Repo.all()
-  end
-
-  @doc """
   Returns the list of datas for a station.
   """
-  def list_datas_of_station(station) do
-    Data
-    |> where(station_id: ^station.id)
-    |> order_by(desc: :inserted_at)
-    |> Repo.all()
-  end
+  def list_datas(station) do
+    query = "SELECT * FROM \"datas\" WHERE \"station_id\" = '#{station.id}' ORDER BY time DESC"
 
-  @doc """
-  Gets a single data.
-  """
-  def find_data(id), do: Repo.get(Data, id)
+    with %{results: [%{series: [data | _]} | _]} <- Connection.query(query) do
+      columns = Enum.map(data.columns, fn(x) -> String.to_atom(x) end)
+
+      data.values
+      |> Enum.map(fn(values) -> parse_data(columns, values) end)
+    end
+  end
 
   @doc """
   Returns the current data of a station
   """
-  def current_data_of_station(station) do
-    "SELECT * FROM datas WHERE station_id = #{station.id} ORDER BY time DESC LIMIT 1"
-    |> Connection.query()
+  def current_data(station) do
+    query = "SELECT * FROM \"datas\" WHERE \"station_id\" = '#{station.id}' ORDER BY time DESC LIMIT 1"
+
+    with %{results: [%{series: [data | _]} | _]} <- Connection.query(query) do
+      values = List.first(data.values)
+      columns = Enum.map(data.columns, fn(x) -> String.to_atom(x) end)
+      parse_data(columns, values)
+    end
+  end
+
+  def parse_data(col, val) do
+    [col, val]
+    |> List.zip
+    |> Map.new
   end
 end

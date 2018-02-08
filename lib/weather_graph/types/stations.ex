@@ -19,7 +19,6 @@ defmodule WeatherGraph.Types.Stations do
 
   @desc "A data of a station"
   object :data do
-    field(:id, :id)
     field(:barometer, non_null(:float))
     field(:in_temperature, non_null(:float))
     field(:out_temperature, non_null(:float))

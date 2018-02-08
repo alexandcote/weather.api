@@ -22,24 +22,13 @@ defmodule WeatherGraph.Resolvers.Stations do
     |> Stations.create_station()
   end
 
-  def list_datas(_args, _info) do
-    {:ok, Stations.list_datas()}
-  end
-
-  def find_data(%{id: id}, _info) do
-    case Stations.find_data(id) do
-      nil -> {:error, "Data id #{id} was not found"}
-      data -> {:ok, data}
-    end
+  def list_datas(station, _args, _info) do
+    {:ok, Stations.list_datas(station)}
   end
 
   def current_data(station, _args, _info) do
-    case Stations.current_data_of_station(station) do
+    case Stations.current_data(station) do
       data -> {:ok, data}
     end
-  end
-
-  def list_datas(station, _args, _info) do
-    {:ok, Stations.list_datas_of_station(station)}
   end
 end

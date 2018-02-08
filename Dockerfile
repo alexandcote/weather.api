@@ -1,6 +1,9 @@
 FROM elixir:1.6-alpine
 MAINTAINER Alexandre Côté <a.cote@2kloc.com>
 
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
+
 ENV PORT 4000
 ENV MIX_ENV=prod
 
