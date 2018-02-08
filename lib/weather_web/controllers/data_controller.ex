@@ -2,6 +2,7 @@ defmodule WeatherWeb.DataController do
   use WeatherWeb, :controller
 
   alias Weather.Stations.Data
+  alias Weather.Connection
 
   action_fallback(WeatherWeb.FallbackController)
 
@@ -11,7 +12,7 @@ defmodule WeatherWeb.DataController do
     data = %{data | fields: Map.merge(data.fields, params)}
     data = %{data | tags: %{data.tags | station_id: String.to_integer(station_id)}}
 
-    with :ok <- Weather.Connection.write(data, async: true) do
+    with :ok <- Connection.write(data) do
       send_resp(conn, :no_content, "")
     end
   end

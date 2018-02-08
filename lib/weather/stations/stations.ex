@@ -7,6 +7,7 @@ defmodule Weather.Stations do
 
   alias Weather.Repo
   alias Weather.Stations.{Station, Data}
+  alias Weather.Connection
 
   @doc """
   Returns the list of stations.
@@ -85,10 +86,7 @@ defmodule Weather.Stations do
   Returns the current data of a station
   """
   def current_data_of_station(station) do
-    Data
-    |> where(station_id: ^station.id)
-    |> order_by(desc: :inserted_at)
-    |> first
-    |> Repo.one()
+    "SELECT * FROM datas WHERE station_id = #{station.id} ORDER BY time DESC LIMIT 1"
+    |> Connection.query()
   end
 end

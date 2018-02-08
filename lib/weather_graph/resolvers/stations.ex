@@ -33,8 +33,6 @@ defmodule WeatherGraph.Resolvers.Stations do
     end
   end
 
-  # TODO replace this with a dataloader
-  # https://github.com/absinthe-graphql/absinthe/blob/master/guides/ecto.md
   def current_data(station, _args, _info) do
     case Stations.current_data_of_station(station) do
       data -> {:ok, data}
