@@ -44,6 +44,8 @@ defmodule WeatherWeb.Endpoint do
     signing_salt: "1iiZbK3y"
   )
 
+  plug(CORSPlug)
+
   plug(WeatherWeb.Router)
 
   @doc """

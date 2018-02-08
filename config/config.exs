@@ -27,6 +27,17 @@ config :weather, Weather.Repo,
   password: System.get_env("POSTGRES_PASSWORD"),
   pool_size: String.to_integer(System.get_env("POSTGRES_POOL_SIZE") || "10")
 
+config :weather, Weather.Connection,
+  database: System.get_env("INFLUXDB_DB"),
+  host: System.get_env("INFLUXDB_DB_HOST"),
+  username: System.get_env("INFLUXDB_USER"),
+  password: System.get_env("INFLUXDB_USER_PASSWORD"),
+  pool: [max_overflow: 10, size: 1],
+  port: String.to_integer(System.get_env("INFLUXDB_DB_PORT") || "8086"),
+  scheme: "http",
+  http_opts: [insecure: true],
+  writer: Instream.Writer.Line
+
 config :weather, Authentication.Guardian,
   issuer: "weather",
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
@@ -34,6 +45,11 @@ config :weather, Authentication.Guardian,
 config :weather, Authentication.Pipeline,
   module: Authentication.Guardian,
   error_handler: Authentication.ErrorHandler
+
+config :cors_plug,
+  origin: [{:system, "APP_DOMAIN", "*"}],
+  max_age: 86400,
+  methods: ["GET", "POST"]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

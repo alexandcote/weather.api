@@ -91,13 +91,4 @@ defmodule Weather.Stations do
     |> first
     |> Repo.one()
   end
-
-  @doc """
-  Creates a data.
-  """
-  def create_data(attrs \\ %{}) do
-    %Data{}
-    |> Data.changeset(attrs)
-    |> Repo.insert()
-  end
 end

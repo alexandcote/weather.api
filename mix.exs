@@ -20,7 +20,7 @@ defmodule Weather.Mixfile do
   def application do
     [
       mod: {Weather.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :instream]
     ]
   end
 
@@ -42,9 +42,11 @@ defmodule Weather.Mixfile do
       {:phoenix_ecto, "~> 3.2"},
       {:poison, "~> 3.1.0"},
       {:gettext, "~> 0.11"},
+      {:cors_plug, "~> 1.2"},
 
       # Database
       {:postgrex, ">= 0.0.0"},
+      {:instream, "~> 0.17"},
 
       # GraphQL
       {:absinthe, "~> 1.4.0"},

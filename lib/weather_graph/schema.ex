@@ -29,13 +29,6 @@ defmodule WeatherGraph.Schema do
 
       resolve(&Resolvers.Stations.find_station/2)
     end
-
-    @desc "Get a data record"
-    field :data, type: non_null(:data) do
-      arg(:id, non_null(:id))
-
-      resolve(&Resolvers.Stations.find_data/2)
-    end
   end
 
   mutation do

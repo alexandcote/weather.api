@@ -3,13 +3,12 @@ defmodule Weather.Stations.Station do
   import Ecto.Changeset
 
   alias Weather.Accounts.User
-  alias Weather.Stations.{Data, Station}
+  alias Weather.Stations.Station
 
   schema "stations" do
     field(:name, :string)
 
     belongs_to(:owner, User, foreign_key: :owner_id)
-    has_many(:datas, Data)
 
     timestamps()
   end
