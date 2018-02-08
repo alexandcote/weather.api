@@ -2,7 +2,7 @@ defmodule Weather.Stations.Data do
   use Instream.Series
 
   series do
-    measurement("datas_2")
+    measurement("datas")
 
     tag(:station_id)
 
