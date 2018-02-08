@@ -2,9 +2,9 @@ defmodule WeatherWeb.Router do
   use WeatherWeb, :router
 
   # Aliases
-  alias WeatherGraph.Schema
-  alias WeatherWeb.{Plugs, DataController, UserSocket}
-
+  alias Weather.Authentication
+  alias WeatherGraph.{Plugs, Schema}
+  alias WeatherWeb.{DataController, UserSocket}
   # Pipelines
   pipeline :api do
     plug(:accepts, ["json"])
@@ -13,13 +13,14 @@ defmodule WeatherWeb.Router do
   pipeline :graphql do
     plug(:accepts, ["json"])
 
+    plug(Authentication.Pipeline)
     plug(Plugs.Context)
   end
 
   scope "/api" do
     pipe_through(:api)
 
-    resources "/datas", DataController, only: [:create]
+    post("/stations/:station_id/datas", DataController, :create)
   end
 
   scope "/graphql" do
@@ -42,7 +43,7 @@ defmodule WeatherWeb.Router do
         Absinthe.Plug.GraphiQL,
         schema: Schema,
         socket: UserSocket,
-        interface: :advanced
+        interface: :playground
       )
     end
   end

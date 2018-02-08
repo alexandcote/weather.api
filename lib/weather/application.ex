@@ -10,8 +10,9 @@ defmodule Weather.Application do
     children = [
       # Start the Ecto repository
       supervisor(Weather.Repo, []),
+      Weather.Connection,
       # Start the endpoint when the application starts
-      supervisor(WeatherWeb.Endpoint, []),
+      supervisor(WeatherWeb.Endpoint, [])
       # Start your own worker by calling: Weather.Worker.start_link(arg1, arg2, arg3)
       # worker(Weather.Worker, [arg1, arg2, arg3]),
     ]

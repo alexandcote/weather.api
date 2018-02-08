@@ -1,4 +1,5 @@
-FROM elixir:1.6.0
+FROM elixir:1.6-alpine
+MAINTAINER Alexandre Côté <a.cote@2kloc.com>
 
 ENV PORT 4000
 ENV MIX_ENV=prod
