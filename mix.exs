@@ -46,7 +46,9 @@ defmodule Weather.Mixfile do
 
       # Database
       {:postgrex, ">= 0.0.0"},
-      {:instream, git: "https://github.com/mneudert/instream.git", ref: "324bc60ae4ddc8599fc0e7a63b48ee9a9c7b78e9"},
+      {:instream,
+       git: "https://github.com/mneudert/instream.git",
+       ref: "324bc60ae4ddc8599fc0e7a63b48ee9a9c7b78e9"},
 
       # GraphQL
       {:absinthe, "~> 1.4.0"},

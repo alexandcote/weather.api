@@ -22,8 +22,8 @@ defmodule WeatherGraph.Resolvers.Stations do
     |> Stations.create_station()
   end
 
-  def list_datas(station, _args, _info) do
-    {:ok, Stations.list_datas(station)}
+  def list_datas(station, args, _info) do
+    {:ok, Stations.list_datas(station, args)}
   end
 
   def current_data(station, _args, _info) do
