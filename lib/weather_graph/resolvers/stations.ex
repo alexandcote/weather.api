@@ -12,7 +12,14 @@ defmodule WeatherGraph.Resolvers.Stations do
   def find_station(%{id: id}, _info) do
     case Stations.find_station(id) do
       nil -> {:error, "Station id #{id} was not found"}
-      data -> {:ok, data}
+      station -> {:ok, station}
+    end
+  end
+
+  def find_station(_args, _info) do
+    case Stations.first() do
+      nil -> {:error, "Station was not found"}
+      station -> {:ok, station}
     end
   end
 

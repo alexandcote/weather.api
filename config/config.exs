@@ -47,7 +47,7 @@ config :weather, Authentication.Pipeline,
   error_handler: Authentication.ErrorHandler
 
 config :cors_plug,
-  origin: [{:system, "APP_DOMAIN", "*"}],
+  origin: [System.get_env("APP_DOMAIN") || "*"],
   max_age: 86400,
   methods: ["GET", "POST"]
 

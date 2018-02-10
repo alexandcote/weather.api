@@ -25,7 +25,7 @@ defmodule WeatherGraph.Schema do
 
     @desc "Get a station"
     field :station, type: non_null(:station) do
-      arg(:id, non_null(:id))
+      arg(:id, :id)
 
       resolve(&Resolvers.Stations.find_station/2)
     end

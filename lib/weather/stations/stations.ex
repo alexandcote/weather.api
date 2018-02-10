@@ -33,6 +33,11 @@ defmodule Weather.Stations do
   def find_station(id), do: Repo.get(Station, id)
 
   @doc """
+  Gets the first station.
+  """
+  def first(), do: Station |> first |> Repo.one()
+
+  @doc """
   Creates a station.
   """
   def create_station(attrs \\ %{}) do
